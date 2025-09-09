@@ -1,165 +1,151 @@
-[
-  {
-    "title": "Calculation",
-    "max_row": 3,
-    "max_col": 10,
-    "cells": [
-      [
-        {
-          "addr": "A1",
-          "value": "Annexure - Water Demand Calculations for Conveyor MVWS System ",
-          "formula": null
-        },
-        {
-          "addr": "B1",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "C1",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "D1",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "E1",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "F1",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "G1",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "H1",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "I1",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "J1",
-          "value": null,
-          "formula": null
-        }
-      ],
-      [
-        {
-          "addr": "A2",
-          "value": "Sr. No.",
-          "formula": null
-        },
-        {
-          "addr": "B2",
-          "value": "Conveyor Length",
-          "formula": null
-        },
-        {
-          "addr": "C2",
-          "value": "Conveyor Width",
-          "formula": null
-        },
-        {
-          "addr": "D2",
-          "value": "Conveyor No of Belt",
-          "formula": null
-        },
-        {
-          "addr": "E2",
-          "value": "Total Area (In sq. meter)\nFormula = L x W x Number of Belts",
-          "formula": null
-        },
-        {
-          "addr": "F2",
-          "value": "Design Density 10.2 lpm/m2 as per IS:15325 Clause No 8.7.2",
-          "formula": null
-        },
-        {
-          "addr": "G2",
-          "value": "Theoretical Water Requirement [L/Min]",
-          "formula": null
-        },
-        {
-          "addr": "H2",
-          "value": "Theoretical Water Requirement [m^3/h]",
-          "formula": null
-        },
-        {
-          "addr": "I2",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "J2",
-          "value": null,
-          "formula": null
-        }
-      ],
-      [
-        {
-          "addr": "A3",
-          "value": 1,
-          "formula": null
-        },
-        {
-          "addr": "B3",
-          "value": 172,
-          "formula": null
-        },
-        {
-          "addr": "C3",
-          "value": 0.8,
-          "formula": null
-        },
-        {
-          "addr": "D3",
-          "value": 2,
-          "formula": null
-        },
-        {
-          "addr": "E3",
-          "value": null,
-          "formula": "=(B3*C3*D3)"
-        },
-        {
-          "addr": "F3",
-          "value": 10.2,
-          "formula": null
-        },
-        {
-          "addr": "G3",
-          "value": null,
-          "formula": "=(E3*F3)"
-        },
-        {
-          "addr": "H3",
-          "value": null,
-          "formula": "=(G3*0.06)"
-        },
-        {
-          "addr": "I3",
-          "value": null,
-          "formula": null
-        },
-        {
-          "addr": "J3",
-          "value": null,
-          "formula": null
-        }
-      ]
-    ]
-  }
-]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Annexure - Water Demand Calculations for Conveyor MVWS System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #222;
+      margin-bottom: 5px;
+    }
+    p {
+      margin-bottom: 20px;
+      color: #555;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 95%;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+    th {
+      background: #007BFF;
+      color: white;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 5px;
+      text-align: center;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+    td.result {
+      font-weight: bold;
+      color: #007BFF;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      background: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h1>Annexure - Water Demand Calculations for Conveyor MVWS System</h1>
+  <p>Enter values below. Results auto-calculate.</p>
+
+  <table id="calcTable">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Conveyor Length (m)</th>
+        <th>Conveyor Width (m)</th>
+        <th>Conveyor No. of Belts</th>
+        <th>Total Area (sq.m)<br><small>Formula = L × W × No. of Belts</small></th>
+        <th>Design Density (lpm/sq.m)</th>
+        <th>Theoretical Water Req. (lpm)</th>
+        <th>Theoretical Water Req. (m³/hr)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><input type="number" id="length" value="300" step="0.01"></td>
+        <td><input type="number" id="width" value="0.8" step="0.01"></td>
+        <td><input type="number" id="belts" value="2" step="1"></td>
+        <td class="result" id="area"></td>
+        <td><input type="number" id="density" value="10.2" step="0.01"></td>
+        <td class="result" id="water"></td>
+        <td class="result" id="waterM3"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button onclick="downloadPDF()">Download PDF</button>
+
+  <!-- jsPDF library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+  <script>
+    function calculate() {
+      let L = parseFloat(document.getElementById("length").value) || 0;
+      let W = parseFloat(document.getElementById("width").value) || 0;
+      let B = parseFloat(document.getElementById("belts").value) || 0;
+      let D = parseFloat(document.getElementById("density").value) || 0;
+
+      let area = L * W * B;
+      let water = area * D;          // lpm
+      let waterM3 = water * 0.06;    // convert to m³/hr
+
+      document.getElementById("area").innerText = area.toFixed(2);
+      document.getElementById("water").innerText = water.toFixed(2);
+      document.getElementById("waterM3").innerText = waterM3.toFixed(2);
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Title
+      doc.setFontSize(14);
+      doc.text("Annexure - Water Demand Calculations for Conveyor MVWS System", 14, 15);
+
+      // Table
+      doc.autoTable({ 
+        html: '#calcTable', 
+        startY: 25,
+        styles: { halign: 'center' },
+        headStyles: { fillColor: [0, 123, 255] }
+      });
+
+      // Save
+      doc.save("Water_Demand_Calculations.pdf");
+    }
+
+    document.querySelectorAll("input").forEach(inp => {
+      inp.addEventListener("input", calculate);
+    });
+
+    // initial calculation
+    calculate();
+  </script>
+</body>
+</html>
