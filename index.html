@@ -1,151 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Annexure - Water Demand Calculations for Conveyor MVWS System</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f8f9fa;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 {
-      color: #222;
-      margin-bottom: 5px;
-    }
-    p {
-      margin-bottom: 20px;
-      color: #555;
-    }
-    table {
-      margin: 0 auto;
-      border-collapse: collapse;
-      width: 95%;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-    }
-    th {
-      background: #007BFF;
-      color: white;
-      text-align: center;
-    }
-    input {
-      width: 100%;
-      padding: 5px;
-      text-align: center;
-      border: none;
-      outline: none;
-      font-size: 14px;
-    }
-    td.result {
-      font-weight: bold;
-      color: #007BFF;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 14px;
-      border: none;
-      border-radius: 5px;
-      background: #28a745;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #218838;
-    }
-  </style>
-</head>
-<body>
-  <h1>Annexure - Water Demand Calculations for Conveyor MVWS System</h1>
-  <p>Enter values below. Results auto-calculate.</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-  <table id="calcTable">
-    <thead>
-      <tr>
-        <th>Sr. No.</th>
-        <th>Conveyor Length (m)</th>
-        <th>Conveyor Width (m)</th>
-        <th>Conveyor No. of Belts</th>
-        <th>Total Area (sq.m)<br><small>Formula = L × W × No. of Belts</small></th>
-        <th>Design Density (lpm/sq.m)</th>
-        <th>Theoretical Water Req. (lpm)</th>
-        <th>Theoretical Water Req. (m³/hr)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td><input type="number" id="length" value="300" step="0.01"></td>
-        <td><input type="number" id="width" value="0.8" step="0.01"></td>
-        <td><input type="number" id="belts" value="2" step="1"></td>
-        <td class="result" id="area"></td>
-        <td><input type="number" id="density" value="10.2" step="0.01"></td>
-        <td class="result" id="water"></td>
-        <td class="result" id="waterM3"></td>
-      </tr>
-    </tbody>
-  </table>
+    // Title centered
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    const title = "Annexure - Water Demand Calculations for Conveyor MVWS System";
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const titleWidth = doc.getTextWidth(title);
+    doc.text(title, (pageWidth - titleWidth) / 2, 20);
 
-  <button onclick="downloadPDF()">Download PDF</button>
+    // Table of values
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
 
-  <!-- jsPDF library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    let y = 40;
+    const inputs = document.querySelectorAll("table input");
+    const labels = document.querySelectorAll("table th");
 
-  <script>
-    function calculate() {
-      let L = parseFloat(document.getElementById("length").value) || 0;
-      let W = parseFloat(document.getElementById("width").value) || 0;
-      let B = parseFloat(document.getElementById("belts").value) || 0;
-      let D = parseFloat(document.getElementById("density").value) || 0;
-
-      let area = L * W * B;
-      let water = area * D;          // lpm
-      let waterM3 = water * 0.06;    // convert to m³/hr
-
-      document.getElementById("area").innerText = area.toFixed(2);
-      document.getElementById("water").innerText = water.toFixed(2);
-      document.getElementById("waterM3").innerText = waterM3.toFixed(2);
-    }
-
-    function downloadPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      // Title
-      doc.setFontSize(14);
-      doc.text("Annexure - Water Demand Calculations for Conveyor MVWS System", 14, 15);
-
-      // Table
-      doc.autoTable({ 
-        html: '#calcTable', 
-        startY: 25,
-        styles: { halign: 'center' },
-        headStyles: { fillColor: [0, 123, 255] }
-      });
-
-      // Save
-      doc.save("Water_Demand_Calculations.pdf");
-    }
-
-    document.querySelectorAll("input").forEach(inp => {
-      inp.addEventListener("input", calculate);
+    inputs.forEach((input, i) => {
+        if (input.value.trim() !== "") {
+            let label = labels[i].innerText;
+            let value = input.value;
+            doc.text(`${label}: ${value}`, 20, y);
+            y += 10;
+        }
     });
 
-    // initial calculation
-    calculate();
-  </script>
-</body>
-</html>
+    // Footer with current date (bottom right)
+    const today = new Date();
+    const dateStr = today.toLocaleDateString();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const dateWidth = doc.getTextWidth(dateStr);
+    doc.text(dateStr, pageWidth - dateWidth - 20, pageHeight - 10);
+
+    doc.save("Conveyor_MVWS_Calculations.pdf");
+}
+</script>
